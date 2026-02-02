@@ -1,0 +1,30 @@
+{
+  "name": "genesis-observer",
+  "displayName": "GENESIS Observer",
+  "description": "Observes developer behavior to learn personalized patterns",
+  "version": "0.1.0",
+  "publisher": "genesis-engine",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Other"],
+  "main": "./dist/extension.js",
+  "activationEvents": ["*"],
+  "contributes": {
+    "commands": [
+      { "command": "genesisObserver.toggle", "title": "Toggle GENESIS Observer" }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "tsc -p ./",
+    "watch": "tsc -w -p ./"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "@types/node": "^22.7.5",
+    "vsce": "^3.0.0",
+    "@types/vscode": "^1.80.0"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}

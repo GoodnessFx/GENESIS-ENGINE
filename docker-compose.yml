@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  api:
+    build: ./services/api-gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - ml
+  ml:
+    build: ./services/ml-core
+    ports:
+      - "8000:8000"
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: genesis
+      POSTGRES_USER: genesis
+      POSTGRES_DB: genesis
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"

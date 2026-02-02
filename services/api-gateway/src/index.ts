@@ -4,6 +4,7 @@ import helmet from 'helmet'
 import morgan from 'morgan'
 import swaggerUi from 'swagger-ui-express'
 import YAML from 'yamljs'
+import { init, saveTelemetry, getStats } from './db'
 
 const app = express()
 app.use(express.json())
@@ -45,11 +46,20 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 // Telemetry intake
 app.post('/telemetry', async (req, res) => {
   try {
-    // In P1, log and acknowledge; later persist to Postgres/Timescale
-    console.log('telemetry', req.body)
+    await saveTelemetry(req.body)
     res.json({ ok: true })
   } catch {
     res.status(500).json({ error: 'telemetry error' })
+  }
+})
+
+app.get('/stats', async (req, res) => {
+  try {
+    const hours = Number(req.query.hours ?? 24)
+    const rows = await getStats(hours)
+    res.json({ hours, rows })
+  } catch {
+    res.status(500).json({ error: 'stats error' })
   }
 })
 
@@ -68,6 +78,8 @@ app.post('/ml/predict', async (req, res) => {
 })
 
 const port = process.env.PORT || 3000
-app.listen(port, () => {
-  console.log(`API Gateway running on http://localhost:${port}`)
+init().then(() => {
+  app.listen(port, () => {
+    console.log(`API Gateway running on http://localhost:${port}`)
+  })
 })

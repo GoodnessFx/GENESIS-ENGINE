@@ -6,6 +6,10 @@ services:
       - "3000:3000"
     depends_on:
       - ml
+      - postgres
+      - redis
+    environment:
+      DATABASE_URL: postgres://genesis:genesis@postgres:5432/genesis
   ml:
     build: ./services/ml-core
     ports:

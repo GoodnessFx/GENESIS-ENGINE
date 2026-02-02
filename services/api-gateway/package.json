@@ -17,7 +17,8 @@
     "morgan": "^1.10.0",
     "swagger-ui-express": "^5.0.0",
     "yamljs": "^0.3.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "pg": "^8.11.2"
   },
   "devDependencies": {
     "typescript": "^5.5.4",

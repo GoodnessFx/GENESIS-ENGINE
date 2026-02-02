@@ -15,6 +15,7 @@ python -m uvicorn main:app --reload --port 8000
 ```
 cd services/api-gateway
 npm install
+set DATABASE_URL=postgres://genesis:genesis@localhost:5432/genesis
 npm run dev
 ```
 
@@ -25,6 +26,10 @@ npm install
 npm run dev:ui
 npm run dev
 ```
+
+## Telemetry Persistence
+- Requires Postgres running locally or via Docker Compose.
+- Stats endpoint: `GET http://localhost:3000/stats?hours=24`
 
 ## VSCode Extension
 ```
@@ -39,4 +44,5 @@ code --install-extension .
 curl -X POST http://localhost:3000/ml/predict \
   -H "Content-Type: application/json" \
   -d "{\\"context\\":\\"component scaffold\\"}"
+curl http://localhost:3000/stats?hours=24
 ```

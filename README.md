@@ -17,6 +17,7 @@ flowchart TD
 - API Gateway: Node.js + Express + TS
 - ML Core: Python FastAPI
 - VSCode Extension: Telemetry observer
+- Telemetry Persistence: Postgres with time-based stats
 
 ## Run
 - ML Core: `uvicorn main:app --reload --port 8000` in services/ml-core
@@ -26,7 +27,11 @@ flowchart TD
 ## Telemetry
 - VSCode extension sends edit/open/selection/file events to `/telemetry`.
 - API Gateway proxies ML predictions via `/ml/predict`.
+- API Gateway persists telemetry and exposes `/stats?hours=24`.
 
 ## Security & Privacy
 - Local-first processing; opt-in observers.
 - Sensitive filtering planned; audit trails for enterprise.
+
+## Configuration
+- `DATABASE_URL` for API Gateway, e.g. `postgres://genesis:genesis@localhost:5432/genesis`.

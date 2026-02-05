@@ -1,12 +1,15 @@
 import { Pool } from 'pg'
-
-const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+let pool: Pool | null = null
+const url = process.env.DATABASE_URL
 
 export async function init() {
+  if (!url) return
+  pool = new Pool({ connectionString: url })
   await pool.query('CREATE TABLE IF NOT EXISTS telemetry (id SERIAL PRIMARY KEY, type TEXT, file TEXT, ts TIMESTAMPTZ)')
 }
 
 export async function saveTelemetry(event: any) {
+  if (!pool) return
   const type = event?.type ?? null
   const file = event?.file ?? null
   const ts = event?.ts ?? Date.now()
@@ -14,6 +17,7 @@ export async function saveTelemetry(event: any) {
 }
 
 export async function getStats(hours: number = 24) {
+  if (!pool) return []
   const q = `SELECT type, COUNT(*)::int AS count FROM telemetry WHERE ts > NOW() - INTERVAL '${hours} hours' GROUP BY type ORDER BY count DESC`
   const r = await pool.query(q)
   return r.rows

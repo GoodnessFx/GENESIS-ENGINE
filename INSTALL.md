@@ -26,6 +26,7 @@ npm install
 npm run dev:ui
 npm run dev
 ```
+Open http://localhost:5173 to use the UI (Predict and Stats).
 
 ## Telemetry Persistence
 - Requires Postgres running locally or via Docker Compose.

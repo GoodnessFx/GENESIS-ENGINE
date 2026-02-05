@@ -3,8 +3,8 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import swaggerUi from 'swagger-ui-express'
-import YAML from 'yamljs'
-import { init, saveTelemetry, getStats } from './db'
+import { parse } from 'yaml'
+import { init, saveTelemetry, getStats } from './db.js'
 
 const app = express()
 app.use(express.json())
@@ -12,7 +12,7 @@ app.use(cors())
 app.use(helmet())
 app.use(morgan('dev'))
 
-const swaggerDocument = YAML.parse(`
+const swaggerDocument = parse(`
 openapi: 3.0.0
 info:
   title: GENESIS API

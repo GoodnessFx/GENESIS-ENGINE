@@ -23,6 +23,7 @@ flowchart TD
 - ML Core: `uvicorn main:app --reload --port 8000` in services/ml-core
 - API: `npm run dev` in services/api-gateway
 - Desktop UI: `npm run dev:ui` then `npm run dev` in apps/desktop
+  - Open http://localhost:5173 for UI. Use Predict to call ML and Stats to view counts.
 
 ## Telemetry
 - VSCode extension sends edit/open/selection/file events to `/telemetry`.
